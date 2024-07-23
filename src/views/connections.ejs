@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connections</title>
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/connections">Connections</a></li>
+            <li><a href="/identities">Identities</a></li>
+        </ul>
+    </nav>
+    
+    <h1>Connections</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Connection</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% connections.forEach(connection => { %>
+                <tr>
+                    <td><%= connection.their_label %></td>
+                    <td>
+                        <button onclick="copyToClipboard('<%= connection.connection_id %>')">Copy Connection ID</button>
+                        <button onclick="copyToClipboard('<%= connection.invitation_msg_id %>')">Copy Invitation Message ID</button>
+                        <form  method="POST" action="/connections/delete">
+                            <input type="hidden" name="connection_id" value="<%= connection.connection_id %>">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    alert('Copied to clipboard:', text);
+                })
+                .catch(err => {
+                    alert('Failed to copy to clipboard:', err);
+                });
+        }
+    </script>
+</body>
+</html>
