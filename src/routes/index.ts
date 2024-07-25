@@ -39,7 +39,7 @@ router.get("/identities", async function (req, res, next) {
     const credentialUrl = `${process.env.ARIES_URL}/credentials`;
     const response = await axios.get(credentialUrl);
     const credentials = response.data.results;
-    console.log(credentials)
+    // console.log(credentials)
     res.render("credentials", {credentials, connections});
 })
 

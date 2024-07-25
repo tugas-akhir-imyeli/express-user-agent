@@ -1,55 +1,102 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Connections</title>
-    <style>
-        /* Add your CSS styles here */
-    </style>
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="/connections">Connections</a></li>
-            <li><a href="/identities">Identities</a></li>
-        </ul>
-    </nav>
-    
-    <h1>Connections</h1>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Connection</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+   <head>
+      <title>Connections</title>
+      <style>
+         /* Add your CSS styles here */
+      </style>
+      <link rel="stylesheet" href="./styles/style.css" />
+   </head>
+   <body>
+      <nav class="bg-gray-800">
+         <div class="max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+               <div
+                  class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
+               >
+                  <div class="flex flex-shrink-0 items-center">
+                     <h1 class="text-xl text-white">Aries User Agent</h1>
+                  </div>
+                  <div class="sm:ml-6 sm:block">
+                     <div class="flex space-x-4">
+                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                        <a
+                           href="/connections"
+                           class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                           aria-current="page"
+                           >Connections</a
+                        >
+                        <a
+                           href="/identities"
+                           class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                           >Identities</a
+                        >
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </nav>
+
+      <div class="flex justify-center mt-10 mb-4">
+         <h1 class="text-3xl font-bold">List of Connections</h1>
+      </div>
+      <div class="mx-20">
+         <ul role="list" class="divide-y-2 divide-white">
             <% connections.forEach(connection => { %>
-                <tr>
-                    <td><%= connection.their_label %></td>
-                    <td>
-                        <button onclick="copyToClipboard('<%= connection.connection_id %>')">Copy Connection ID</button>
-                        <button onclick="copyToClipboard('<%= connection.invitation_msg_id %>')">Copy Invitation Message ID</button>
-                        <form  method="POST" action="/connections/delete">
-                            <input type="hidden" name="connection_id" value="<%= connection.connection_id %>">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
+            <li
+               class="flex justify-between gap-x-6 py-5 bg-gray-200 bg-opacity-75 px-4 rounded leading-6 items-center"
+            >
+               <div class="flex min-w-0 gap-x-4">
+                  <div class="min-w-0 flex-auto">
+                     <p class="text-base font-bold text-gray-900">
+                        <%= connection.their_label %>
+                     </p>
+                  </div>
+               </div>
+               <div class="flex flex-row items-end">
+                  <button
+                     class="mr-2 bg-blue-500 hover:bg-blue-700 active:bg-blue-800 active:transform active:scale-95 text-white font-semibold py-2 px-4 rounded transition duration-150 ease-in-out"
+                     onclick="copyToClipboard('<%= connection.connection_id %>')"
+                  >
+                     Copy Connection ID
+                  </button>
+                  <button
+                     class="mr-2 bg-green-500 hover:bg-green-700 active:bg-green-800 active:transform active:scale-95 text-white font-semibold py-2 px-4 rounded transition duration-150 ease-in-out"
+                     onclick="copyToClipboard('<%= connection.invitation_msg_id %>')"
+                  >
+                     Copy Invitation Message ID
+                  </button>
+                  <form method="POST" action="/connections/delete">
+                     <input
+                        type="hidden"
+                        name="connection_id"
+                        value="<%= connection.connection_id %>"
+                     />
+                     <button
+                        class="bg-red-500 hover:bg-red-700 active:bg-red-800 active:transform active:scale-95 text-white font-semibold py-2 px-4 rounded transition duration-150 ease-in-out"
+                        type="submit"
+                     >
+                        Delete
+                     </button>
+                  </form>
+               </div>
+            </li>
             <% }) %>
-        </tbody>
-    </table>
-    
-    <script>
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    alert('Copied to clipboard:', text);
-                })
-                .catch(err => {
-                    alert('Failed to copy to clipboard:', err);
-                });
-        }
-    </script>
-</body>
+         </ul>
+      </div>
+
+      <script>
+         function copyToClipboard(text) {
+            navigator.clipboard
+               .writeText(text)
+               .then(() => {
+                  alert("Copied to clipboard:", text);
+               })
+               .catch((err) => {
+                  alert("Failed to copy to clipboard:", err);
+               });
+         }
+      </script>
+   </body>
 </html>
